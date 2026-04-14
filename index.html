@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="https://cashinflash.com/images/favicon-source.png">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Cash in Flash — Complete Your Application</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Plaid Link SDK — loaded upfront exactly like apply.cashinflash.com -->
+<script type='text/javascript' src='https://api.netlify.com/jqHaoDp05Q16vDt9-qj9WQUVZI7EIx3r_NT-PQMMPlqXGz0VYdA-hpTYzkQHt6T0P27I3BOX0w-R0cof6AnpBfdjxr6fMhfuyQme-JB7qe42drBKn176d8tKYyCr7wxuLyzTnrykx96PtcTNhCdtP7_ZU_qkUzGiHaXD-DUdY0WjL4ZErADnvWMyb4SX2Mvw2DkZMEHd2y6GB-dJdckMN0JvGZRPf7aPNkcdyfAG3Asg5Dlbrg74I-37CX42M1OkN6BsuNahEAlP-ubachioGAUl40RWO1MrqdvTahiZHY2XMoZud1VWB9FrwpVn4bTFcpDkjIvXXzFhtN0qVz-E-PtNYH0pERYY3Acu7fYCDayxLtm0dOyH83CzegzAVcsRRZDt71xHXcWQhUB9QCBO6CLYCaLS46RzWMDLsba8uyeYY3LglodMWKGR-SHpb6aqtzkggQGh8GEAW5quRxHOk5c6lxutqlAFd4p665YgXc9fUqy2LJ1WpEacl6Trtie3f252vE_c6pK3GDvB9hP3'></script><script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://cashinflash.com" class="logo">
+      <img src="https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png" alt="Cash in Flash" width="160" height="21">
+    </a>
+    <nav class="main-nav"><ul class="nav-list"></ul></nav>
+    <div class="header-actions">
+      <a href="https://cashinflash.my.vergentlms.com/location-finder/results/CA/none/none" class="btn-store">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Find a Store
+      </a>
+      <a href="https://cashinflash.com" class="btn-login">Home</a>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-hd">
+      <a href="https://cashinflash.com" class="logo">
+        <img src="https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png" alt="Cash in Flash" width="140" height="19">
+      </a>
+      <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="mobile-menu-inner">
+      <ul class="mobile-nav-list">
+        <li class="mobile-nav-item"><a href="https://cashinflash.com/?page_id=11699">Loans</a></li>
+        <li class="mobile-nav-item"><a href="https://cashinflash.com/western-union/">Western Union</a></li>
+        <li class="mobile-nav-item"><a href="https://cashinflash.com/money-tips/">Money Tips</a></li>
+      </ul>
+      <div class="mobile-menu-extra">
+        <a href="https://cashinflash.my.vergentlms.com/location-finder/results/CA/none/none" class="mobile-store-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Find a Store
+        </a>
+        <div class="mobile-btn-row">
+          <a href="/" class="btn-apply">Apply Now</a>
+          <a href="https://cashinflash.my.vergentlms.com/login" class="btn-login">Log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+</header>
+
+<main>
+
+  <!-- ── FORM SCREEN ── -->
+  <div id="form-screen">
+
+    <div class="hero">
+      <h1>Complete Your Application</h1>
+      <p>You're almost there! We just need to verify your identity and connect your bank account to finalize your loan.</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="steps-row">
+        <div class="step-dot active" id="dot-1"><span>1</span></div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step-dot" id="dot-2"><span>2</span></div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step-dot" id="dot-3"><span>3</span></div>
+      </div>
+      <div class="step-labels">
+        <div class="step-label active" id="lbl-1">Identity</div>
+        <div class="step-label" id="lbl-2">ID Upload</div>
+        <div class="step-label" id="lbl-3">Bank</div>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <!-- ══ STEP 1 — Identity ══ -->
+      <div class="step-panel active" id="step-1">
+        <div class="section-title">Your Information</div>
+        <div class="section-sub">Please confirm your name and last 4 digits of your SSN so we can match your records.</div>
+
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="First name" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="Last name" autocomplete="family-name">
+        </div>
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="text" id="email" placeholder="your@email.com" autocomplete="email" inputmode="email" style="width:100%;border:1.5px solid var(--border2);border-radius:10px;padding:13px 14px;font-size:15px;font-family:var(--sans);color:var(--text);transition:border-color .15s,box-shadow .15s;background:white">
+        </div>
+        <div class="field">
+          <label>Last 4 of SSN <span class="req">*</span></label>
+          <div class="ssn-row">
+            <span class="ssn-prefix">XXX-XX-</span>
+            <input type="text" id="ssn4" placeholder="0000" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" style="width:90px;text-align:center;letter-spacing:.2em;font-weight:700">
+          </div>
+        </div>
+
+        <div class="err-msg" id="err-1">Please fill in all required fields.</div>
+        <button class="btn-primary" onclick="nextStep(1)">Continue →</button>
+        <p class="consent">Your information is encrypted and securely processed. We never share your data.</p>
+      </div>
+
+      <!-- ══ STEP 2 — Gov ID Upload ══ -->
+      <div class="step-panel" id="step-2">
+        <div class="section-title">Government ID</div>
+        <div class="section-sub">Upload a clear photo or scan of your driver's license, state ID, or passport. Front side only is required.</div>
+
+        <div class="upload-zone" id="id-zone" ondragover="onDragOver(event,'id-zone')" ondragleave="onDragLeave('id-zone')" ondrop="onDrop(event,'govId','id-zone')">
+          <input type="file" id="govId" accept="image/*,.pdf" onchange="onFileSelect('govId','id-zone','id-filename')">
+          <div class="upload-icon">🪪</div>
+          <div class="upload-title">Tap to upload your ID</div>
+          <div class="upload-sub">JPG, PNG or PDF — max 10MB</div>
+          <div class="upload-filename" id="id-filename"></div>
+        </div>
+
+        <div class="err-msg" id="err-2">Please upload your government ID.</div>
+        <button class="btn-primary" onclick="nextStep(2)" style="margin-top:20px">Continue →</button>
+        <button class="btn-back" onclick="prevStep(2)">← Back</button>
+      </div>
+
+      <!-- ══ STEP 3 — Bank ══ -->
+      <div class="step-panel" id="step-3">
+        <div class="section-title">Bank Verification</div>
+        <div class="section-sub">Connect your bank account securely via Plaid, or upload your last 30–60 days of bank statements.</div>
+
+        <div class="bank-toggle">
+          <button class="bank-btn active" id="btn-plaid-tab" onclick="switchBank('plaid')">
+            <span class="bank-icon">🔗</span>Connect with Plaid<br><small style="font-weight:400;font-size:11px">Instant &amp; secure</small>
+          </button>
+          <button class="bank-btn" id="btn-upload-tab" onclick="switchBank('upload')">
+            <span class="bank-icon">📄</span>Upload Statement<br><small style="font-weight:400;font-size:11px">PDF bank statement</small>
+          </button>
+        </div>
+
+        <!-- Plaid panel -->
+        <div id="bank-plaid">
+          <div class="plaid-box" id="plaid-connect-box">
+            <p>Securely link your bank account in seconds. Your credentials are never stored — Plaid handles everything with bank-level encryption.</p>
+            <button class="btn-plaid" id="plaid-connect-btn" onclick="startPlaid()">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="white"><path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9S4.86 16.5 9 16.5 16.5 13.14 16.5 9 13.14 1.5 9 1.5zm0 2.25a5.25 5.25 0 110 10.5A5.25 5.25 0 019 3.75z"/></svg>
+              Connect Bank Account
+            </button>
+            <div id="plaid-status-msg" style="display:none;margin-top:10px;font-size:13px;font-weight:600;color:var(--green);text-align:center"></div>
+          </div>
+          <div class="plaid-connected" id="plaid-done-box" style="display:none">
+            <div class="check">✅</div>
+            <p>Bank Account Connected!</p>
+            <small id="plaid-institution-name">Ready for verification</small>
+          </div>
+        </div>
+
+        <!-- Upload panel -->
+        <div id="bank-upload" style="display:none">
+          <div class="upload-zone" id="bank-zone" ondragover="onDragOver(event,'bank-zone')" ondragleave="onDragLeave('bank-zone')" ondrop="onDrop(event,'bankStatement','bank-zone','bank-filename')">
+            <input type="file" id="bankStatement" accept=".pdf" onchange="onFileSelect('bankStatement','bank-zone','bank-filename')">
+            <div class="upload-icon">🏦</div>
+            <div class="upload-title">Upload Bank Statement</div>
+            <div class="upload-sub">PDF format · Last 30–60 days · All pages required</div>
+            <div class="upload-filename" id="bank-filename"></div>
+          </div>
+        </div>
+
+        <div class="err-msg" id="err-3">Please connect your bank or upload a statement.</div>
+        <button class="btn-primary" onclick="submitForm()" id="submit-btn" style="margin-top:20px">Submit Documents</button>
+        <button class="btn-back" onclick="prevStep(3)">← Back</button>
+        <p class="consent">By submitting, you authorize Cash in Flash to retrieve your bank account information for underwriting purposes. <a href="https://cashinflash.com/privacy" target="_blank">Privacy Policy</a></p>
+        <div class="security-bar">
+          <div class="security-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            256-bit SSL Encrypted
+          </div>
+          <div class="security-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Your information is secure
+          </div>
+          <div class="security-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            DFPI Licensed Lender
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /card -->
+  </div><!-- /form-screen -->
+
+  <!-- ── SUCCESS SCREEN ── -->
+  <div id="success-screen">
+    <div class="success-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Submission Received
+    </div>
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>You're All Set, <span id="success-name"></span>!</h2>
+    <p class="success-sub">Your documents have been submitted. Our team is reviewing your application and will be in touch shortly.</p>
+
+    <div class="next-steps">
+      <div class="next-steps-title">What happens next</div>
+      <div class="next-step-row">
+        <div class="step-num-badge">1</div>
+        <div class="next-step-text"><b>Document Review</b>We verify your ID and bank information — usually takes just a few minutes.</div>
+      </div>
+      <div class="next-step-row">
+        <div class="step-num-badge">2</div>
+        <div class="next-step-text"><b>Decision</b>You'll receive a call or text with your approval decision.</div>
+      </div>
+      <div class="next-step-row">
+        <div class="step-num-badge">3</div>
+        <div class="next-step-text"><b>Get Your Cash</b>If approved, funds are sent to your debit card within minutes.*</div>
+      </div>
+    </div>
+
+    <div class="store-card">
+      <div class="store-card-name">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Cash in Flash — Arleta
+      </div>
+      <div class="store-detail">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        13937B Van Nuys Blvd, Arleta, CA 91331
+      </div>
+      <div class="store-detail">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (747) 270-7121
+      </div>
+      <div class="store-detail" style="align-items:flex-start">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" style="margin-top:2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.9)"><span>Mon – Fri</span><span style="font-weight:600">10AM – 7PM</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.9)"><span>Saturday</span><span style="font-weight:600">10AM – 5PM</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5)"><span>Sunday</span><span>Closed</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:16px;line-height:1.6">*Funds disbursed after loan approval and execution of final loan agreement.<br>Subject to debit card processing times.</p>
+  </div>
+
+</main>
+
+<script src="app.js"></script>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      256-bit SSL Encrypted
+    </div>
+    <div class="footer-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      DFPI Licensed Lender · CA
+    </div>
+    <div class="footer-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12"/></svg>
+      Your data is protected
+    </div>
+    <div class="footer-item" style="width:100%;justify-content:center;margin-top:4px;font-size:11px">
+      © Cash in Flash · 13937B Van Nuys Blvd, Arleta CA 91331 · <a href="https://cashinflash.com/privacy" style="color:var(--green);text-decoration:none">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
