@@ -84,8 +84,8 @@
     }
   },
   "logo": {
-    "light": "https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png",
-    "dark": "https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png"
+    "light": "https://raw.githubusercontent.com/cashinflash/Cif-website/main/images/Get-Fast-Cash-Loans-Cash-in-Flash.png",
+    "dark": "https://raw.githubusercontent.com/cashinflash/Cif-website/main/images/Get-Fast-Cash-Loans-Cash-in-Flash.png"
   },
   "navbar": {
     "links": [
