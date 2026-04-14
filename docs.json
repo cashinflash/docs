@@ -7,7 +7,7 @@
     "light": "#14E56B",
     "dark": "#11a44f"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "https://raw.githubusercontent.com/cashinflash/Cif-website/main/images/favicon-source.png",
   "navigation": {
     "tabs": [
       {
