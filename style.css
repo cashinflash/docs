@@ -48,6 +48,56 @@ div[class*="navbar"] {
   border-bottom: none !important;
 }
 
+/* Enhanced Mintlify selectors for better targeting */
+nav[data-testid="navbar"],
+div[data-testid="header"],
+header[data-testid="topbar"],
+div[class*="Header"],
+div[class*="Navigation"],
+nav[role="navigation"] {
+  background: #fff !important;
+  box-shadow: var(--cif-shadow) !important;
+  border-bottom: none !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+}
+
+/* Enhanced logo targeting */
+nav[data-testid="navbar"] img,
+div[data-testid="header"] img,
+header[data-testid="topbar"] img,
+div[class*="Header"] img,
+div[class*="Logo"] img {
+  max-height: 24px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Enhanced nav links styling */
+nav[data-testid="navbar"] a,
+div[data-testid="header"] a,
+header[data-testid="topbar"] a,
+div[class*="Header"] a,
+div[class*="Navigation"] a {
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  color: var(--cif-ink) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+}
+
+nav[data-testid="navbar"] a:hover,
+div[data-testid="header"] a:hover,
+header[data-testid="topbar"] a:hover,
+div[class*="Header"] a:hover,
+div[class*="Navigation"] a:hover {
+  color: var(--cif-green) !important;
+  background: rgba(21, 193, 93, 0.05) !important;
+}
+
 /* Constrain inner wrapper to 1200px with 24px padding */
 #navbar > div,
 #header > div {
@@ -176,7 +226,8 @@ div[class*="MobileMenu"] button[aria-label*="close" i] svg {
 
 /* Primary button inside the mobile drawer: solid green gradient pill */
 #sidebar a[class*="primary" i],
-div[class*="MobileMenu"] a[class*="primary" i] {
+div[class*="MobileMenu"] a[class*="primary" i],
+div[class*="mobile-menu"] a[class*="primary" i] {
   background: linear-gradient(90deg, var(--cif-green), var(--cif-green-gm)) !important;
   color: #fff !important;
   border: none !important;
@@ -185,6 +236,22 @@ div[class*="MobileMenu"] a[class*="primary" i] {
   font-weight: 600 !important;
   text-align: center !important;
   justify-content: center !important;
+  margin: 8px 0 !important;
+}
+
+/* Enhanced mobile menu targeting */
+nav[data-testid="navbar"] + div,
+nav[data-testid="navbar"] ~ div[class*="mobile"],
+div[data-testid="mobile-menu"],
+div[class*="MobileNavigation"] {
+  background: var(--cif-menu-grad) !important;
+  color: #fff !important;
+}
+
+/* Mobile menu overlay backdrop */
+div[class*="Overlay"],
+div[class*="Backdrop"] {
+  background: rgba(0, 0, 0, 0.5) !important;
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
