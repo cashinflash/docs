@@ -24,7 +24,7 @@
 }
 body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
-/* ── SITE HEADER — matches apply.cashinflash.com exactly ── */
+/* — SITE HEADER — matches apply.cashinflash.com exactly — */
 .site-header{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:box-shadow .3s}
 .header-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1200px;margin:0 auto;padding:0 24px}
 .logo{display:flex;align-items:center;text-decoration:none}
@@ -70,15 +70,15 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 @media(max-width:768px){.main-nav{display:none}.header-actions{display:none}.menu-toggle{display:block}.header-inner{height:56px;padding:0 16px}.logo img{height:22px}}
 @media(max-width:480px){.header-inner{padding:0 12px}.logo img{height:20px}}
 
-/* ── MAIN WRAP ── */
+/* — MAIN WRAP — */
 main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 16px 48px}
 
-/* ── HERO ── */
+/* — HERO — */
 .hero{text-align:center;max-width:540px;margin-bottom:28px}
 .hero h1{font-size:26px;font-weight:800;color:var(--green-dark);line-height:1.2;margin-bottom:8px}
 .hero p{font-size:15px;color:var(--muted);line-height:1.6}
 
-/* ── PROGRESS BAR ── */
+/* — PROGRESS BAR — */
 .progress-wrap{width:100%;max-width:540px;margin-bottom:28px}
 .steps-row{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:10px}
 .step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--border2);background:white;color:var(--muted);transition:all .3s;flex-shrink:0;position:relative;z-index:1}
@@ -92,18 +92,18 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .step-label{font-size:11px;color:var(--muted);font-weight:500;text-align:center;flex:1}
 .step-label.active{color:var(--green);font-weight:700}
 
-/* ── CARD ── */
+/* — CARD — */
 .card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 28px 32px;width:100%;max-width:540px;border:1px solid var(--border)}
 
-/* ── STEP PANELS ── */
+/* — STEP PANELS — */
 .step-panel{display:none}
 .step-panel.active{display:block}
 
-/* ── SECTION TITLE ── */
+/* — SECTION TITLE — */
 .section-title{font-size:18px;font-weight:700;color:var(--green-dark);margin-bottom:6px}
 .section-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5}
 
-/* ── FORM FIELDS ── */
+/* — FORM FIELDS — */
 .field{margin-bottom:18px}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
 .field label span.req{color:var(--red);margin-left:2px}
@@ -113,7 +113,7 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .ssn-row{display:flex;gap:10px;align-items:center}
 .ssn-prefix{font-size:15px;color:var(--muted);white-space:nowrap;font-weight:500}
 
-/* ── UPLOAD ZONE ── */
+/* — UPLOAD ZONE — */
 .upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#fafcfb;position:relative}
 .upload-zone:hover,.upload-zone.over{border-color:var(--green);background:var(--green-light)}
 .upload-zone.has-file{border-color:var(--green);background:var(--green-light);border-style:solid}
@@ -123,13 +123,13 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .upload-sub{font-size:12px;color:var(--muted)}
 .upload-filename{font-size:13px;font-weight:600;color:var(--green);margin-top:8px;word-break:break-all}
 
-/* ── BANK METHOD TOGGLE ── */
+/* — BANK METHOD TOGGLE — */
 .bank-toggle{display:flex;gap:10px;margin-bottom:24px}
 .bank-btn{flex:1;padding:14px 10px;border:2px solid var(--border2);border-radius:12px;background:white;font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center;line-height:1.4}
 .bank-btn.active{border-color:var(--green);background:var(--green-light);color:var(--green)}
 .bank-btn .bank-icon{font-size:22px;display:block;margin-bottom:4px}
 
-/* ── PLAID BUTTON ── */
+/* — PLAID BUTTON — */
 .plaid-box{background:var(--green-light);border:1.5px solid var(--green-border);border-radius:12px;padding:20px;text-align:center}
 .plaid-box p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5}
 .btn-plaid{display:inline-flex;align-items:center;gap:8px;background:#000;color:white;border:none;border-radius:10px;padding:14px 24px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:all .2s}
@@ -140,7 +140,7 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .plaid-connected p{font-size:14px;font-weight:600;color:var(--green)}
 .plaid-connected small{font-size:12px;color:var(--muted)}
 
-/* ── BUTTONS ── */
+/* — BUTTONS — */
 .btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;margin-top:8px;transition:all .2s;position:relative;overflow:hidden}
 .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,107,60,.35)}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -149,15 +149,15 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .btn-back{background:none;border:1.5px solid var(--border2);border-radius:10px;padding:13px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;width:100%;margin-top:10px;transition:all .2s}
 .btn-back:hover{border-color:var(--green);color:var(--green)}
 
-/* ── ERROR MSG ── */
+/* — ERROR MSG — */
 .err-msg{background:var(--red-light);border:1px solid var(--red-border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);font-weight:500;margin-top:14px;display:none}
 .err-msg.show{display:block}
 
-/* ── CONSENT ── */
+/* — CONSENT — */
 .consent{font-size:12px;color:var(--muted);line-height:1.6;margin-top:16px;text-align:center}
 .consent a{color:var(--green);text-decoration:none}
 
-/* ── SUCCESS SCREEN ── */
+/* — SUCCESS SCREEN — */
 #success-screen{display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:520px;padding:12px 0 32px;animation:fadeUp .4s ease}
 .success-badge{display:inline-flex;align-items:center;gap:7px;background:var(--green-light);border:1.5px solid var(--green-border);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;color:var(--green);letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px}
 .success-icon{width:88px;height:88px;background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;box-shadow:0 8px 32px rgba(26,107,60,.3);animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
@@ -179,27 +179,27 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .hour-row{font-size:12px;color:rgba(255,255,255,.8);display:flex;justify-content:space-between}
 .hour-row.today{color:white;font-weight:700}
 
-/* ── FORM SCREEN WRAPPER ── */
+/* — FORM SCREEN WRAPPER — */
 #form-screen{display:flex;flex-direction:column;align-items:center;width:100%}
 
-/* ── SECURITY BAR ── */
+/* — SECURITY BAR — */
 .security-bar{display:flex;align-items:center;justify-content:center;gap:20px;padding:14px 0 4px;flex-wrap:wrap}
 .security-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500}
 .security-item svg{flex-shrink:0}
 
-/* ── FOOTER ── */
+/* — FOOTER — */
 footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;text-align:center;margin-top:auto}
 .footer-inner{max-width:540px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
 .footer-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500}
 
-/* ── ANIMATIONS ── */
+/* — ANIMATIONS — */
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .card{animation:fadeUp .3s ease both}
 
-/* ── RESPONSIVE ── */
+/* — RESPONSIVE — */
 @media(max-width:400px){
   .card{padding:20px 18px 24px}
   .hero h1{font-size:22px}
@@ -213,7 +213,7 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
 <header class="site-header">
   <div class="header-inner">
     <a href="https://cashinflash.com" class="logo">
-      <img src="https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png" alt="Cash in Flash" width="160" height="21">
+      <img src="/logo/light.svg" alt="Cash in Flash" width="160" height="21">
     </a>
 
     <nav class="main-nav">
@@ -238,7 +238,7 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
   <div class="mobile-menu" id="mobile-menu">
     <div class="mobile-menu-hd">
       <a href="https://cashinflash.com" class="logo">
-        <img src="https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png" alt="Cash in Flash" width="140" height="19">
+        <img src="/logo/light.svg" alt="Cash in Flash" width="140" height="19">
       </a>
       <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -273,7 +273,7 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
 
 <main>
 
-  <!-- ── FORM SCREEN ── -->
+  <!-- — FORM SCREEN — -->
   <div id="form-screen">
 
     <div class="hero">
@@ -412,7 +412,7 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
     </div><!-- /card -->
   </div><!-- /form-screen -->
 
-  <!-- ── SUCCESS SCREEN ── -->
+  <!-- — SUCCESS SCREEN — -->
   <div id="success-screen">
     <div class="success-badge">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
