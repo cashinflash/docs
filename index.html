@@ -22,7 +22,17 @@
   --shadow:0 4px 24px rgba(0,0,0,.08);
   --radius:16px;
 }
-body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+body{background:linear-gradient(160deg,#f0faf4 0%,#e8f5ee 40%,#fff 100%);font-family:var(--sans);color:var(--text);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+
+/* ── FLOATING BLOBS ── */
+@keyframes floatBlob{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-18px) rotate(3deg)}66%{transform:translateY(10px) rotate(-2deg)}}
+.blob-bg{position:fixed;pointer-events:none;z-index:0;border-radius:50%}
+.blob-bg-1{width:400px;height:400px;background:rgba(21,193,93,.045);top:-80px;right:-100px;animation:floatBlob 12s ease-in-out infinite -2s}
+.blob-bg-2{width:300px;height:280px;background:rgba(21,193,93,.04);top:30%;left:-120px;border-radius:60% 40% 30% 70%/60% 30% 70% 40%;animation:floatBlob 14s ease-in-out infinite -5s}
+.blob-bg-3{width:250px;height:250px;background:rgba(21,193,93,.04);bottom:20%;right:-80px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;animation:floatBlob 10s ease-in-out infinite -8s}
+.blob-bg-4{width:200px;height:200px;background:rgba(21,193,93,.035);bottom:-40px;left:-60px;border-radius:50% 40% 60% 50%/40% 60% 40% 60%;animation:floatBlob 16s ease-in-out infinite -3s}
+.blob-bg-5{width:180px;height:180px;background:rgba(21,193,93,.03);top:55%;right:10%;border-radius:40% 60% 50% 50%/50% 40% 60% 50%;animation:floatBlob 11s ease-in-out infinite -7s}
+.blob-bg-6{width:220px;height:220px;background:rgba(21,193,93,.035);top:10%;left:5%;animation:floatBlob 13s ease-in-out infinite -1s}
 
 /* — SITE HEADER — matches apply.cashinflash.com exactly — */
 .site-header{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:box-shadow .3s}
@@ -71,7 +81,7 @@ body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:1
 @media(max-width:480px){.header-inner{padding:0 12px}.logo img{height:20px}}
 
 /* — MAIN WRAP — */
-main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 16px 48px}
+main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 16px 48px;position:relative;z-index:1}
 
 /* — HERO — */
 .hero{text-align:center;max-width:540px;margin-bottom:28px}
@@ -188,7 +198,7 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .security-item svg{flex-shrink:0}
 
 /* — FOOTER — */
-footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;text-align:center;margin-top:auto}
+footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;text-align:center;margin-top:auto;position:relative;z-index:1}
 .footer-inner{max-width:540px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
 .footer-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500}
 
@@ -208,6 +218,14 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
 </style>
 </head>
 <body>
+
+<!-- Background blobs — fixed to viewport, spread across screen -->
+<div class="blob-bg blob-bg-1" aria-hidden="true"></div>
+<div class="blob-bg blob-bg-2" aria-hidden="true"></div>
+<div class="blob-bg blob-bg-3" aria-hidden="true"></div>
+<div class="blob-bg blob-bg-4" aria-hidden="true"></div>
+<div class="blob-bg blob-bg-5" aria-hidden="true"></div>
+<div class="blob-bg blob-bg-6" aria-hidden="true"></div>
 
 <!-- SITE HEADER (matches apply.cashinflash.com) -->
 <header class="site-header">
