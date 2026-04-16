@@ -7,91 +7,32 @@
     "light": "#14E56B",
     "dark": "#11a44f"
   },
-  "favicon": "https://raw.githubusercontent.com/cashinflash/Cif-website/main/images/favicon-source.png",
+  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Welcome",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "index"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
-    "light": "https://raw.githubusercontent.com/cashinflash/Cif-website/main/images/Get-Fast-Cash-Loans-Cash-in-Flash.png",
-    "dark": "https://raw.githubusercontent.com/cashinflash/Cif-website/main/images/Get-Fast-Cash-Loans-Cash-in-Flash.png"
+    "light": "https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png",
+    "dark": "https://cashinflash.com/images/Get-Fast-Cash-Loans-Cash-in-Flash.png",
+    "href": "https://cashinflash.com"
   },
   "navbar": {
     "links": [
       {
         "label": "Find a Store",
-        "href": "https://cashinflash.my.vergentlms.com/location-finder/results/CA/none/none"
+        "href": "https://cashinflash.com/locations/"
       },
       {
         "label": "Loans",
@@ -114,15 +55,15 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
@@ -130,10 +71,5 @@
       "github": "https://github.com/cashinflash",
       "linkedin": "https://linkedin.com/company/cashinflash"
     }
-  },
-  "scripts": [
-    {
-      "src": "/style.css"
-    }
-  ]
+  }
 }

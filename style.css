@@ -24,7 +24,7 @@
   --cif-font:        'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* ── GLOBAL FONT ─────────────────────────────────────────── */
+/* ── GLOBAL FONT ───────────────────────────── */
 html,
 body,
 #navbar,
@@ -74,14 +74,14 @@ div[class*="Logo"] img {
   height: auto !important;
 }
 
-/* Enhanced nav links styling */
+/* Enhanced nav links styling — match apply page .btn-store (0.9rem) */
 nav[data-testid="navbar"] a,
 div[data-testid="header"] a,
 header[data-testid="topbar"] a,
 div[class*="Header"] a,
 div[class*="Navigation"] a {
   font-weight: 500 !important;
-  font-size: 0.95rem !important;
+  font-size: 0.9rem !important;
   color: var(--cif-ink) !important;
   text-decoration: none !important;
   transition: color 0.2s ease !important;
@@ -107,7 +107,7 @@ div[class*="Navigation"] a:hover {
   padding-right: 24px;
 }
 
-/* ── LOGO SIZING ─────────────────────────────────────────── */
+/* ── LOGO SIZING ────────────────────────────── */
 #navbar img,
 #header img,
 img[alt*="Cash in Flash" i] {
@@ -115,11 +115,11 @@ img[alt*="Cash in Flash" i] {
   width: auto !important;
 }
 
-/* ── NAV LINKS ───────────────────────────────────────────── */
+/* ── NAV LINKS ──────────────────────────────── */
 #navbar a,
 #header a {
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--cif-ink);
   text-decoration: none;
   transition: color 0.2s;
@@ -128,6 +128,21 @@ img[alt*="Cash in Flash" i] {
 #navbar a:hover,
 #header a:hover {
   color: var(--cif-green);
+}
+
+/* ── DESKTOP: hide Loans / Western Union / Money Tips ──────── */
+/* Apply page desktop shows only Find a Store + Home pill. Mintlify
+   can't differentiate desktop vs mobile nav items, so hide them here
+   on desktop; they remain visible in the mobile drawer. */
+@media (min-width: 769px) {
+  #navbar a[href*="page_id=11699"],
+  #navbar a[href*="western-union"],
+  #navbar a[href*="money-tips"],
+  nav[data-testid="navbar"] a[href*="page_id=11699"],
+  nav[data-testid="navbar"] a[href*="western-union"],
+  nav[data-testid="navbar"] a[href*="money-tips"] {
+    display: none !important;
+  }
 }
 
 /* ── PRIMARY BUTTON (Home) — outlined pill, inverts on hover ─ */
@@ -159,7 +174,7 @@ a[class*="primary"][class*="button"]:hover {
   color: #fff !important;
 }
 
-/* ── HAMBURGER / MENU TOGGLE ─────────────────────────────── */
+/* ── HAMBURGER / MENU TOGGLE ───────────────────── */
 #navbar button[aria-label*="menu" i],
 #navbar button[aria-label*="Menu" i],
 #navbar button[aria-label*="toggle" i],
@@ -174,7 +189,7 @@ button[aria-label*="Toggle" i] {
   color: var(--cif-ink) !important;
 }
 
-/* ── MOBILE MENU DRAWER ──────────────────────────────────── */
+/* ── MOBILE MENU DRAWER ──────────────────────── */
 /* Mintlify's mobile panel: dark green gradient background, white text */
 #sidebar,
 div[class*="MobileMenu"],
@@ -254,7 +269,7 @@ div[class*="Backdrop"] {
   background: rgba(0, 0, 0, 0.5) !important;
 }
 
-/* ── RESPONSIVE ──────────────────────────────────────────── */
+/* ── RESPONSIVE ─────────────────────────────── */
 @media (max-width: 768px) {
   #navbar,
   #header {

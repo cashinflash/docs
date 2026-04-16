@@ -5,3 +5,9 @@
 # Draft content
 drafts/
 *.draft.mdx
+
+# Leftover vanilla-HTML artifacts (pre-Mintlify). Kept out so they
+# don't creep back in and collide with /style.css or index.mdx.
+*.html
+app.js
+styles.css
