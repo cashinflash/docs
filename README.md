@@ -1,55 +1,40 @@
-# Mintlify Starter Kit
+# Cash in Flash Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+Source for [docs.cashinflash.com](https://docs.cashinflash.com), the public
+documentation site for Cash in Flash. Built on [Mintlify](https://mintlify.com).
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Local preview
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
-
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
-
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
+Install the Mintlify CLI once:
 
 ```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
 npm i -g mint
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+From the repo root:
 
-```
+```bash
 mint dev
 ```
 
-View your local preview at `http://localhost:3000`.
+This serves the site at `http://localhost:3000` with hot reload. Schema
+validation errors for `docs.json` appear in the terminal.
 
-## Publishing changes
+## Publishing
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+The Mintlify GitHub app watches the `main` branch. Any push to `main`
+deploys to `docs.cashinflash.com` within ~60 seconds. Pull requests get
+an auto-generated preview URL posted as a PR comment.
 
-## Need help?
+## Layout
 
-### Troubleshooting
+- `docs.json` — site config (navbar, logo, navigation, theme colors).
+- `style.css` — custom CSS that restyles Mintlify's chrome to match
+  the [cif-apply](https://github.com/cashinflash/cif-apply) header.
+- `index.mdx` — landing page.
+- `logo/`, `images/`, `favicon.svg` — brand assets.
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+## Contributing
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+See [CONTRIBUTING.md](./CONTRIBUTING.md). For anything beyond small edits,
+open a PR and grab a preview link to eyeball before merging.
