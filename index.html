@@ -2,61 +2,188 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/faviconnew.png">
+<link rel="apple-touch-icon" href="/faviconnew.png">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <title>Cash in Flash — Complete Your Application</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!-- Plaid Link SDK — loaded upfront exactly like apply.cashinflash.com -->
 <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-<link rel="stylesheet" href="styles.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a6b3c;--green-mid:#1e7d46;--green-dark:#144f2c;
+  --green-light:#eaf5ef;--green-border:#b2d9c0;
+  --red:#c0392b;--red-light:#fdf2f2;--red-border:#f5b8b0;
+  --bg:#f0f4f1;--surface:#fff;
+  --border:#dde5df;--border2:#ccd6ce;
+  --text:#0e1a12;--text2:#2d4235;--muted:#6b7c72;
+  --sans:'Poppins',sans-serif;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+  --radius:16px;
+}
+body{background:var(--bg);font-family:var(--sans);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+/* ── HEADER — matches apply.cashinflash.com exactly ── */
+header{background:#ffffff;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8ede9;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.logo{height:32px;width:auto;max-width:160px;object-fit:contain}
+.logo-txt{color:var(--green);font-size:19px;font-weight:800;display:none}
+.header-links{display:flex;align-items:center;gap:20px}
+.header-link{color:var(--muted);font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s}
+.header-link:hover{color:var(--green)}
+.header-link.phone{color:var(--green)}
+@media(max-width:480px){.header-link.home{display:none}}
+
+/* ── MAIN WRAP ── */
+main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 16px 48px}
+
+/* ── HERO ── */
+.hero{text-align:center;max-width:540px;margin-bottom:28px}
+.hero h1{font-size:26px;font-weight:800;color:var(--green-dark);line-height:1.2;margin-bottom:8px}
+.hero p{font-size:15px;color:var(--muted);line-height:1.6}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap{width:100%;max-width:540px;margin-bottom:28px}
+.steps-row{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:10px}
+.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--border2);background:white;color:var(--muted);transition:all .3s;flex-shrink:0;position:relative;z-index:1}
+.step-dot.active{border-color:var(--green);background:var(--green);color:white}
+.step-dot.done{border-color:var(--green);background:var(--green);color:white}
+.step-dot.done::after{content:'✓';font-size:14px}
+.step-dot.done span{display:none}
+.step-line{flex:1;height:2px;background:var(--border2);transition:background .3s;max-width:80px}
+.step-line.done{background:var(--green)}
+.step-labels{display:flex;justify-content:space-between;padding:0 0px}
+.step-label{font-size:11px;color:var(--muted);font-weight:500;text-align:center;flex:1}
+.step-label.active{color:var(--green);font-weight:700}
+
+/* ── CARD ── */
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 28px 32px;width:100%;max-width:540px;border:1px solid var(--border)}
+
+/* ── STEP PANELS ── */
+.step-panel{display:none}
+.step-panel.active{display:block}
+
+/* ── SECTION TITLE ── */
+.section-title{font-size:18px;font-weight:700;color:var(--green-dark);margin-bottom:6px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5}
+
+/* ── FORM FIELDS ── */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
+.field label span.req{color:var(--red);margin-left:2px}
+.field input[type=text]{width:100%;border:1.5px solid var(--border2);border-radius:10px;padding:13px 14px;font-size:15px;font-family:var(--sans);color:var(--text);transition:border-color .15s,box-shadow .15s;background:white}
+.field input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(26,107,60,.1)}
+.field input.error{border-color:var(--red)}
+.ssn-row{display:flex;gap:10px;align-items:center}
+.ssn-prefix{font-size:15px;color:var(--muted);white-space:nowrap;font-weight:500}
+
+/* ── UPLOAD ZONE ── */
+.upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#fafcfb;position:relative}
+.upload-zone:hover,.upload-zone.over{border-color:var(--green);background:var(--green-light)}
+.upload-zone.has-file{border-color:var(--green);background:var(--green-light);border-style:solid}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:32px;margin-bottom:8px}
+.upload-title{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:4px}
+.upload-sub{font-size:12px;color:var(--muted)}
+.upload-filename{font-size:13px;font-weight:600;color:var(--green);margin-top:8px;word-break:break-all}
+
+/* ── BANK METHOD TOGGLE ── */
+.bank-toggle{display:flex;gap:10px;margin-bottom:24px}
+.bank-btn{flex:1;padding:14px 10px;border:2px solid var(--border2);border-radius:12px;background:white;font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center;line-height:1.4}
+.bank-btn.active{border-color:var(--green);background:var(--green-light);color:var(--green)}
+.bank-btn .bank-icon{font-size:22px;display:block;margin-bottom:4px}
+
+/* ── PLAID BUTTON ── */
+.plaid-box{background:var(--green-light);border:1.5px solid var(--green-border);border-radius:12px;padding:20px;text-align:center}
+.plaid-box p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.btn-plaid{display:inline-flex;align-items:center;gap:8px;background:#000;color:white;border:none;border-radius:10px;padding:14px 24px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:all .2s}
+.btn-plaid:hover{background:#222;transform:translateY(-1px)}
+.btn-plaid img{height:18px;filter:invert(1)}
+.plaid-connected{background:#d4edda;border:1.5px solid #b2d9c0;border-radius:12px;padding:16px;text-align:center}
+.plaid-connected .check{font-size:28px;margin-bottom:6px}
+.plaid-connected p{font-size:14px;font-weight:600;color:var(--green)}
+.plaid-connected small{font-size:12px;color:var(--muted)}
+
+/* ── BUTTONS ── */
+.btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;margin-top:8px;transition:all .2s;position:relative;overflow:hidden}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,107,60,.35)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-primary.loading{color:transparent}
+.btn-primary.loading::after{content:'';position:absolute;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;top:50%;left:50%;margin:-10px;animation:spin .7s linear infinite}
+.btn-back{background:none;border:1.5px solid var(--border2);border-radius:10px;padding:13px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;width:100%;margin-top:10px;transition:all .2s}
+.btn-back:hover{border-color:var(--green);color:var(--green)}
+
+/* ── ERROR MSG ── */
+.err-msg{background:var(--red-light);border:1px solid var(--red-border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);font-weight:500;margin-top:14px;display:none}
+.err-msg.show{display:block}
+
+/* ── CONSENT ── */
+.consent{font-size:12px;color:var(--muted);line-height:1.6;margin-top:16px;text-align:center}
+.consent a{color:var(--green);text-decoration:none}
+
+/* ── SUCCESS SCREEN ── */
+#success-screen{display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:520px;padding:12px 0 32px;animation:fadeUp .4s ease}
+.success-badge{display:inline-flex;align-items:center;gap:7px;background:var(--green-light);border:1.5px solid var(--green-border);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;color:var(--green);letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px}
+.success-icon{width:88px;height:88px;background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;box-shadow:0 8px 32px rgba(26,107,60,.3);animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+.success-icon svg{width:42px;height:42px;stroke:white;stroke-width:3;fill:none;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s .2s forwards}
+#success-screen h2{font-size:26px;font-weight:800;color:var(--green-dark);margin-bottom:10px;letter-spacing:-.02em}
+#success-screen .success-sub{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:6px;max-width:400px}
+.next-steps{background:white;border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin:20px 0;width:100%;text-align:left;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.next-steps-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:14px}
+.next-step-row{display:flex;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+.next-step-row:last-child{border-bottom:none;padding-bottom:0}
+.step-num-badge{width:28px;height:28px;border-radius:50%;background:var(--green);color:white;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.next-step-text{font-size:13px;color:var(--text2);line-height:1.5;font-weight:500}
+.next-step-text b{color:var(--text);display:block;font-size:13px;margin-bottom:2px}
+.store-card{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:16px;padding:20px 24px;width:100%;text-align:left;color:white;box-shadow:0 6px 24px rgba(26,107,60,.25)}
+.store-card-name{font-size:15px;font-weight:800;color:white;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.store-detail{display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(255,255,255,.85);margin-bottom:8px;font-weight:500}
+.store-detail:last-child{margin-bottom:0}
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:4px}
+.hour-row{font-size:12px;color:rgba(255,255,255,.8);display:flex;justify-content:space-between}
+.hour-row.today{color:white;font-weight:700}
+
+/* ── FORM SCREEN WRAPPER ── */
+#form-screen{display:flex;flex-direction:column;align-items:center;width:100%}
+
+/* ── SECURITY BAR ── */
+.security-bar{display:flex;align-items:center;justify-content:center;gap:20px;padding:14px 0 4px;flex-wrap:wrap}
+.security-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500}
+.security-item svg{flex-shrink:0}
+
+/* ── FOOTER ── */
+footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;text-align:center;margin-top:auto}
+.footer-inner{max-width:540px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+.footer-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500}
+
+/* ── ANIMATIONS ── */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card{animation:fadeUp .3s ease both}
+
+/* ── RESPONSIVE ── */
+@media(max-width:400px){
+  .card{padding:20px 18px 24px}
+  .hero h1{font-size:22px}
+  .bank-toggle{flex-direction:column}
+}
+</style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <a href="https://cashinflash.com" class="logo">
-      <img src="/logo/light.svg" alt="Cash in Flash" width="160" height="21">
-    </a>
-    <nav class="main-nav"><ul class="nav-list"></ul></nav>
-    <div class="header-actions">
-      <a href="https://cashinflash.com/locations/" class="btn-store">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Find a Store
-      </a>
-      <a href="https://cashinflash.com" class="btn-login">Home</a>
-    </div>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
+<header>
+  <a href="https://cashinflash.com" style="display:flex;align-items:center;text-decoration:none">
+    <img class="logo" src="https://cashinflash.com/wp-content/uploads/2025/08/logo_500px.png"
+         alt="Cash in Flash"
+         onerror="this.src='https://cashinflash.com/wp-content/uploads/2025/08/logo_500px.png'">
+    <span class="logo-txt">Cash in Flash</span>
+  </a>
+  <div class="header-links">
+    <a class="header-link phone" href="tel:7472707121">📞 (747) 270-7121</a>
+    <a class="header-link home" href="https://cashinflash.com">← Home</a>
   </div>
-  <div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-menu-hd">
-      <a href="https://cashinflash.com" class="logo">
-        <img src="/logo/light.svg" alt="Cash in Flash" width="140" height="19">
-      </a>
-      <button class="mobile-close-btn" id="mobile-close-btn" aria-label="Close menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="mobile-menu-inner">
-      <ul class="mobile-nav-list">
-        <li class="mobile-nav-item"><a href="https://cashinflash.com/?page_id=11699">Loans</a></li>
-        <li class="mobile-nav-item"><a href="https://cashinflash.com/western-union/">Western Union</a></li>
-        <li class="mobile-nav-item"><a href="https://cashinflash.com/money-tips/">Money Tips</a></li>
-      </ul>
-      <div class="mobile-menu-extra">
-        <a href="https://cashinflash.com/locations/" class="mobile-store-link">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Find a Store
-        </a>
-        <div class="mobile-btn-row">
-          <a href="/" class="btn-apply">Apply Now</a>
-          <a href="https://cashinflash.my.vergentlms.com/login" class="btn-login">Log in</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="mobile-menu-overlay" id="mobile-overlay"></div>
 </header>
 
 <main>
@@ -255,7 +382,300 @@
 
 </main>
 
-<script src="app.js"></script>
+<script>
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+const API_BASE = window.BACKEND_URL || 'https://cif-apply.onrender.com';
+const PLAID_HOST = API_BASE;
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let currentStep = 1;
+let bankMethod = 'plaid';
+let plaidAccessToken = '';
+let plaidAssetToken = '';
+let plaidInstitution = '';
+let plaidLinkToken = '';
+let plaidPolling = null;
+let govIdFile = null;
+let bankFile = null;
+
+// ═══════════════════════════════════════════
+// STEP NAVIGATION
+// ═══════════════════════════════════════════
+function goStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`step-${n}`).classList.add('active');
+
+  // Update dots
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    const lbl = document.getElementById(`lbl-${i}`);
+    dot.className = 'step-dot' + (i < n ? ' done' : i === n ? ' active' : '');
+    lbl.className = 'step-label' + (i === n ? ' active' : '');
+  }
+  // Update lines
+  for (let i = 1; i <= 2; i++) {
+    document.getElementById(`line-${i}`).className = 'step-line' + (i < n ? ' done' : '');
+  }
+  currentStep = n;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function nextStep(from) {
+  hideErr(from);
+  if (from === 1) {
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const em = document.getElementById('email').value.trim();
+    const ssn = document.getElementById('ssn4').value.trim();
+    if (!fn || !ln) { showErr(1, 'Please fill in your name.'); return; }
+    if (!em || !em.includes('@') || !em.includes('.')) { showErr(1, 'Please enter a valid email address.'); return; }
+    if (ssn.length !== 4 || !/^\d{4}$/.test(ssn)) { showErr(1, 'Please enter exactly 4 digits for your SSN.'); return; }
+  }
+  if (from === 2) {
+    if (!govIdFile) { showErr(2, 'Please upload your government ID.'); return; }
+  }
+  goStep(from + 1);
+}
+
+function prevStep(from) { goStep(from - 1); }
+
+function showErr(n, msg) {
+  const el = document.getElementById(`err-${n}`);
+  el.textContent = msg || el.textContent;
+  el.classList.add('show');
+}
+function hideErr(n) { document.getElementById(`err-${n}`).classList.remove('show'); }
+
+// ═══════════════════════════════════════════
+// BANK TAB SWITCH
+// ═══════════════════════════════════════════
+function switchBank(mode) {
+  bankMethod = mode;
+  document.getElementById('bank-plaid').style.display = mode === 'plaid' ? 'block' : 'none';
+  document.getElementById('bank-upload').style.display = mode === 'upload' ? 'block' : 'none';
+  document.getElementById('btn-plaid-tab').className = 'bank-btn' + (mode === 'plaid' ? ' active' : '');
+  document.getElementById('btn-upload-tab').className = 'bank-btn' + (mode === 'upload' ? ' active' : '');
+}
+
+// ═══════════════════════════════════════════
+// FILE UPLOAD HELPERS
+// ═══════════════════════════════════════════
+function onFileSelect(inputId, zoneId, filenameId) {
+  const file = document.getElementById(inputId).files[0];
+  if (!file) return;
+  if (inputId === 'govId') govIdFile = file;
+  if (inputId === 'bankStatement') bankFile = file;
+  const zone = document.getElementById(zoneId);
+  zone.classList.add('has-file');
+  document.getElementById(filenameId).textContent = '✓ ' + file.name;
+}
+
+function onDragOver(e, zoneId) {
+  e.preventDefault();
+  document.getElementById(zoneId).classList.add('over');
+}
+function onDragLeave(zoneId) {
+  document.getElementById(zoneId).classList.remove('over');
+}
+function onDrop(e, inputId, zoneId, filenameId) {
+  e.preventDefault();
+  document.getElementById(zoneId).classList.remove('over');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  if (inputId === 'govId') govIdFile = file;
+  if (inputId === 'bankStatement') bankFile = file;
+  document.getElementById(zoneId).classList.add('has-file');
+  if (filenameId) document.getElementById(filenameId).textContent = '✓ ' + file.name;
+}
+
+// ═══════════════════════════════════════════
+// PLAID — copied exactly from apply.cashinflash.com
+// ═══════════════════════════════════════════
+async function startPlaid() {
+  const btn = document.getElementById('plaid-connect-btn');
+  const statusEl = document.getElementById('plaid-status-msg');
+  if (btn) { btn.disabled = true; }
+  try {
+    // Exact same call as apply.cashinflash.com/form.html
+    const r = await fetch(`${API_BASE}/plaid/link-token`);
+    const d = await r.json();
+    if (!d.link_token) throw new Error('No link token');
+
+    const handler = Plaid.create({
+      token: d.link_token,
+      onSuccess: async (public_token, metadata) => {
+        plaidInstitution = metadata.institution?.name || 'Your Bank';
+        if (statusEl) { statusEl.textContent = '⟳ Connecting...'; statusEl.style.display = 'block'; }
+        try {
+          const ex = await fetch(`${API_BASE}/plaid/exchange`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({public_token})
+          });
+          const exd = await ex.json();
+          plaidAccessToken = exd.access_token || exd.accessToken || public_token;
+          plaidAssetToken = exd.asset_report_token || '';
+          showPlaidConnected(plaidInstitution);
+        } catch(e) {
+          // Exchange failed — still mark connected so user can proceed
+          plaidAccessToken = public_token;
+          showPlaidConnected(plaidInstitution);
+        }
+      },
+      onExit: (err) => {
+        if (btn) { btn.disabled = false; }
+        if (err && statusEl) {
+          statusEl.textContent = 'Connection cancelled. Try again.';
+          statusEl.style.display = 'block';
+        }
+      }
+    });
+    handler.open();
+  } catch(e) {
+    if (btn) { btn.disabled = false; }
+    showErr(3, 'Could not connect to Plaid. Please try uploading your bank statement instead.');
+    console.error('[Plaid]', e);
+  }
+}
+
+function showPlaidConnected(institution) {
+  document.getElementById('plaid-connect-box').style.display = 'none';
+  document.getElementById('plaid-done-box').style.display = 'block';
+  document.getElementById('plaid-institution-name').textContent = institution + ' connected';
+}
+
+// ═══════════════════════════════════════════
+// SUBMIT
+// ═══════════════════════════════════════════
+async function submitForm() {
+  hideErr(3);
+
+  // Validate bank
+  if (bankMethod === 'plaid' && !plaidAccessToken) {
+    showErr(3, 'Please connect your bank account using Plaid.');
+    return;
+  }
+  if (bankMethod === 'upload' && !bankFile) {
+    showErr(3, 'Please upload your bank statement PDF.');
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  try {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const ssn4      = document.getElementById('ssn4').value.trim();
+
+    // Build form data payload matching the existing /submit endpoint
+    // Mark as "lead" source so the dashboard shows the Lead badge
+    const email = document.getElementById('email').value.trim();
+    const formData = {
+      firstName, lastName,
+      email,                         // captured for denial emails
+      ssn4,                          // last 4 only — stored for Vergent matching
+      source: 'lead',                // triggers Lead badge in dashboard
+      loanAmount: '255',             // leads are pre-qualified, default to max
+      bankMethod: bankMethod === 'plaid' ? 'Plaid' : 'Upload',
+      // Pass through minimal fields the backend needs
+      phone: '', address: '', city: '', state: 'CA', zip: '',
+      employer: '', sourceOfIncome: '', payFrequency: '', lastPayDate: '',
+    };
+
+    let pdfB64 = '';
+    let assetToken = '';
+
+    if (bankMethod === 'upload') {
+      // Read PDF as base64
+      pdfB64 = await readFileAsBase64(bankFile);
+    }
+
+    // Gov ID as base64 for storage
+    const govIdB64 = govIdFile ? await readFileAsBase64(govIdFile) : '';
+
+    // Submit to the existing backend
+    const payload = {
+      formData,
+      pdfB64,
+      govIdB64,
+      govIdFilename: govIdFile ? govIdFile.name : '',
+      bankFilename: bankFile ? bankFile.name : '',
+    };
+
+    if (bankMethod === 'plaid') {
+      // Send assetReportToken — the server uses this to fetch the Plaid asset report PDF
+      // accessToken is kept as fallback in case asset report is still generating
+      payload.assetReportToken = plaidAssetToken;
+      payload.accessToken = plaidAccessToken;
+      payload.institution = plaidInstitution;
+    }
+
+    const resp = await fetch(`${API_BASE}/submit`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+
+    const result = await resp.json();
+    if (!resp.ok) throw new Error(result.error || 'Submission failed');
+
+    showSuccess(firstName + ' ' + lastName);
+
+  } catch(e) {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    showErr(3, 'Submission failed: ' + (e.message || 'Please try again.'));
+  }
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+// ═══════════════════════════════════════════
+// SUCCESS
+// ═══════════════════════════════════════════
+function showSuccess(name) {
+  document.getElementById('form-screen').style.display = 'none';
+  const s = document.getElementById('success-screen');
+  s.style.display = 'flex';
+  document.getElementById('success-name').textContent = name;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════
+// SSN — digits only
+// ═══════════════════════════════════════════
+document.getElementById('ssn4').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g,'').slice(0,4);
+});
+
+// Plaid token check from redirect (iOS return)
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('plaid_connected') === '1') {
+    const token = params.get('access_token');
+    const inst  = params.get('institution') || 'Your Bank';
+    if (token) {
+      plaidAccessToken = token;
+      plaidInstitution = inst;
+      goStep(3);
+      showPlaidConnected(inst);
+    }
+  }
+});
+</script>
 <footer>
   <div class="footer-inner">
     <div class="footer-item">
