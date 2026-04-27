@@ -227,6 +227,31 @@ async function submitForm() {
     return;
   }
 
+  // Card opt-in validation — when the customer chooses instant
+  // debit-card funding, every card field is required AND they must
+  // explicitly check the Push-to-Card Authorization box. Without
+  // this we can't legally push funds to the card.
+  const _v = id => (document.getElementById(id)?.value || '').trim();
+  const _optedIn = document.getElementById('cardOptIn')?.checked === true;
+  if (_optedIn) {
+    const missing = [];
+    if (!_v('cardFirst')) missing.push('cardholder first name');
+    if (!_v('cardLast'))  missing.push('cardholder last name');
+    const cardDigits = _v('cardNum').replace(/\D/g,'');
+    if (cardDigits.length < 13 || cardDigits.length > 19) missing.push('valid debit card number');
+    const expDigits = _v('cardExp').replace(/\D/g,'');
+    if (expDigits.length !== 4) missing.push('expiration (MM/YY)');
+    if (_v('cardCvv').length < 3) missing.push('CVV');
+    if (!_v('cardZip')) missing.push('billing ZIP');
+    if (document.getElementById('cardAck')?.checked !== true) {
+      missing.push('Push-to-Card authorization acknowledgment');
+    }
+    if (missing.length) {
+      showErr(3, 'Please complete the debit card section: ' + missing.join(', ') + '.');
+      return;
+    }
+  }
+
   const btn = document.getElementById('submit-btn');
   btn.classList.add('loading');
   btn.disabled = true;
