@@ -164,7 +164,55 @@ function showPlaidConnected(institution) {
 }
 
 // ═══════════════════════════════════════════
-// SUBMIT
+// DEBIT CARD (optional) — matches apply.cashinflash.com behavior
+// ═══════════════════════════════════════════
+function toggleCard() {
+  const on = document.getElementById('cardOptIn').checked;
+  const box = document.getElementById('cardFields');
+  box.style.display = on ? 'block' : 'none';
+  if (!on) {
+    ['cardFirst','cardLast','cardNum','cardExp','cardCvv','cardZip'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    const typeEl = document.getElementById('cardType'); if (typeEl) { typeEl.value = ''; typeEl.disabled = true; }
+    const ack = document.getElementById('cardAck'); if (ack) ack.checked = false;
+    const st = document.getElementById('cardStatus'); if (st) { st.textContent = ''; st.className = 'card-status'; }
+  }
+}
+
+function detectBrand(d) {
+  if (/^4/.test(d)) return 'Visa';
+  if (/^(34|37)/.test(d)) return 'Amex';
+  if (/^(5[1-5]|2(2[2-9]|[3-6]\d|7[01]|720))/.test(d)) return 'MasterCard';
+  if (/^(6011|65|64[4-9])/.test(d)) return 'Discover';
+  return '';
+}
+
+function onCardNum() {
+  const el = document.getElementById('cardNum');
+  const d = el.value.replace(/\D/g,'').slice(0,19);
+  el.value = d.replace(/(.{4})/g,'$1 ').trim();
+  const brand = detectBrand(d);
+  const typeEl = document.getElementById('cardType');
+  if (brand) { typeEl.value = brand; typeEl.disabled = true; }
+  else       { typeEl.value = '';    typeEl.disabled = true; }
+  const st = document.getElementById('cardStatus');
+  if (st) {
+    if (brand) { st.textContent = '✓ ' + brand; st.className = 'card-status'; }
+    else       { st.textContent = '';            st.className = 'card-status'; }
+  }
+}
+
+function onCardExp() {
+  const el = document.getElementById('cardExp');
+  const d = el.value.replace(/\D/g,'').slice(0,4);
+  el.value = d.length <= 2 ? d : d.slice(0,2) + '/' + d.slice(2);
+}
+
+// ═══════════════════════════════════════════
+// SUBMIT — payload format matches apply.cashinflash.com so docs
+// applications go through the same underwriting + reporting pipeline
+// (Firebase reports/, Claude underwriting, email, admin dashboard).
 // ═══════════════════════════════════════════
 async function submitForm() {
   hideErr(3);
@@ -184,52 +232,75 @@ async function submitForm() {
   btn.disabled = true;
 
   try {
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName  = document.getElementById('lastName').value.trim();
-    const ssn4      = document.getElementById('ssn4').value.trim();
+    const v = id => (document.getElementById(id)?.value || '').trim();
+    const firstName = v('firstName');
+    const lastName  = v('lastName');
+    const ssn4      = v('ssn4');
+    const email     = v('email');
 
-    // Build form data payload matching the existing /submit endpoint
-    // Mark as "lead" source so the dashboard shows the Lead badge
-    const email = document.getElementById('email').value.trim();
+    // Source must be one of the values the backend accepts
+    // ('', 'web-apply', 'desktop', 'plaid-rerun'). Using 'web-apply'
+    // routes docs submissions through the SAME Firebase report
+    // pipeline + Claude underwriting + email notifications + admin
+    // dashboard view as apply.cashinflash.com.
     const formData = {
-      firstName, lastName,
-      email,                         // captured for denial emails
-      ssn4,                          // last 4 only — stored for Vergent matching
-      source: 'lead',                // triggers Lead badge in dashboard
-      loanAmount: '255',             // leads are pre-qualified, default to max
-      bankMethod: bankMethod === 'plaid' ? 'Plaid' : 'Upload',
-      // Pass through minimal fields the backend needs
-      phone: '', address: '', city: '', state: 'CA', zip: '',
-      employer: '', sourceOfIncome: '', payFrequency: '', lastPayDate: '',
+      firstName, middleName: '', lastName,
+      email,
+      ssn: '', ssn4,
+      source: 'web-apply',
+      loanAmount: '255',
+      bankMethod: bankMethod === 'plaid' ? 'Plaid (Connected)' : 'PDF Upload',
+      language: 'en',
+      phone: '', dob: '', address: '', address2: '', city: '', state: 'CA', zip: '',
+      sourceOfIncome: '', employer: '', payFrequency: '', payDay: '',
+      lastPayDate: '', paymentMethod: '', grossPay: '',
+      accountType: '', routingNumber: '', accountNumber: '', bankName: '',
+      housingStatus: '', bankruptcy: '', military: '', consent: 'true',
+      hasGovernmentId: !!govIdFile,
     };
 
-    let pdfB64 = '';
-    let assetToken = '';
-
+    let pdfBase64 = '';
     if (bankMethod === 'upload') {
-      // Read PDF as base64
-      pdfB64 = await readFileAsBase64(bankFile);
+      pdfBase64 = await readFileAsBase64(bankFile);
     }
-
-    // Gov ID as base64 for storage
     const govIdB64 = govIdFile ? await readFileAsBase64(govIdFile) : '';
 
-    // Submit to the existing backend
+    // Debit card opt-in — server forwards this into the Firebase
+    // record's debitCard sub-object, which the admin dashboard's
+    // Debit Card tab reads directly.
+    const cardOptIn = document.getElementById('cardOptIn')?.checked === true;
+    const cardBrand = document.getElementById('cardType')?.value || '';
+    const cardLast4 = (v('cardNum').replace(/\D/g,'').slice(-4)) || '';
+    let cardData = null;
+    if (cardOptIn) {
+      const expRaw = v('cardExp').replace(/\D/g,'');
+      cardData = {
+        cardholderFirst: v('cardFirst'),
+        cardholderLast:  v('cardLast'),
+        cardNumber:      v('cardNum').replace(/\D/g,''),
+        cvv:             v('cardCvv'),
+        expMonth:        parseInt(expRaw.slice(0,2),10) || 0,
+        expYear:         2000 + (parseInt(expRaw.slice(2,4),10) || 0),
+        billingZip:      v('cardZip'),
+        brand:           cardBrand,
+        acknowledged:    document.getElementById('cardAck')?.checked === true,
+      };
+    }
+
     const payload = {
       formData,
-      pdfB64,
+      pdfBase64,
       govIdB64,
       govIdFilename: govIdFile ? govIdFile.name : '',
       bankFilename: bankFile ? bankFile.name : '',
+      assetReportToken: bankMethod === 'plaid' ? (plaidAssetToken || '') : '',
+      plaidAccessToken: bankMethod === 'plaid' ? (plaidAccessToken || '') : '',
+      institution: bankMethod === 'plaid' ? plaidInstitution : '',
+      cardOptIn,
+      cardBrand,
+      cardLast4,
+      cardData,
     };
-
-    if (bankMethod === 'plaid') {
-      // Send assetReportToken — the server uses this to fetch the Plaid asset report PDF
-      // accessToken is kept as fallback in case asset report is still generating
-      payload.assetReportToken = plaidAssetToken;
-      payload.accessToken = plaidAccessToken;
-      payload.institution = plaidInstitution;
-    }
 
     const resp = await fetch(`${API_BASE}/submit`, {
       method: 'POST',
@@ -238,7 +309,9 @@ async function submitForm() {
     });
 
     const result = await resp.json();
-    if (!resp.ok) throw new Error(result.error || 'Submission failed');
+    if (!resp.ok || result.success === false) {
+      throw new Error(result.error || 'Submission failed');
+    }
 
     showSuccess(firstName + ' ' + lastName);
 
