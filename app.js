@@ -263,16 +263,17 @@ async function submitForm() {
     const ssn4      = v('ssn4');
     const email     = v('email');
 
-    // Source must be one of the values the backend accepts
-    // ('', 'web-apply', 'desktop', 'plaid-rerun'). Using 'web-apply'
-    // routes docs submissions through the SAME Firebase report
-    // pipeline + Claude underwriting + email notifications + admin
-    // dashboard view as apply.cashinflash.com.
+    // Source 'docs' is the dedicated value for docs.cashinflash.com
+    // submissions — the cif-apply backend allowlists it alongside
+    // 'web-apply', and the cif-dashboard renders it with a distinct
+    // teal "📄 Docs" pill so the admin can spot docs-originated
+    // applications at a glance. Same Firebase reports/ + Claude
+    // underwriting + email notification pipeline as apply.cashinflash.com.
     const formData = {
       firstName, middleName: '', lastName,
       email,
       ssn: '', ssn4,
-      source: 'web-apply',
+      source: 'docs',
       loanAmount: '255',
       bankMethod: bankMethod === 'plaid' ? 'Plaid (Connected)' : 'PDF Upload',
       language: 'en',
