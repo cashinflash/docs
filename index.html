@@ -849,17 +849,17 @@ async function submitForm() {
     const ssn4      = v('ssn4');
     const email     = v('email');
 
-    // TEMPORARY ROLLBACK 2026-04-28: source value reverted from 'docs'
-    // to 'web-apply' to unblock live customers while the cif-apply
-    // server allowlist update is still pending. Once cif-apply
-    // server.py allowlists 'docs' (and cif-dashboard adds the
-    // matching srcBadge entry), flip this back to 'docs' so docs
-    // submissions render with their distinct "📄 Docs" pill.
+    // Source 'docs' is the dedicated value for docs.cashinflash.com
+    // submissions — cif-apply server.py allowlists it alongside
+    // 'web-apply', and cif-dashboard renders it with a distinct
+    // purple "📄 Docs" pill so the admin can spot docs-originated
+    // applications at a glance. Same Firebase reports/ + Vergent
+    // auto-search + email notification pipeline as apply.cashinflash.com.
     const formData = {
       firstName, middleName: '', lastName,
       email,
       ssn: '', ssn4,
-      source: 'web-apply',
+      source: 'docs',
       loanAmount: '255',
       bankMethod: bankMethod === 'plaid' ? 'Plaid (Connected)' : 'PDF Upload',
       language: 'en',
