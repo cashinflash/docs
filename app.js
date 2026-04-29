@@ -46,9 +46,18 @@ function nextStep(from) {
     const ln = document.getElementById('lastName').value.trim();
     const em = document.getElementById('email').value.trim();
     const ssn = document.getElementById('ssn4').value.trim();
+    const dob = document.getElementById('dob').value.trim();
     if (!fn || !ln) { showErr(1, 'Please fill in your name.'); return; }
     if (!em || !em.includes('@') || !em.includes('.')) { showErr(1, 'Please enter a valid email address.'); return; }
     if (ssn.length !== 4 || !/^\d{4}$/.test(ssn)) { showErr(1, 'Please enter exactly 4 digits for your SSN.'); return; }
+    if (!dob || !/^\d{4}-\d{2}-\d{2}$/.test(dob)) { showErr(1, 'Please enter your date of birth.'); return; }
+    // Sanity: must be a real date and ≥ 18 years old. Vergent's
+    // V1 PostCustomerData rejects customer-create without a valid
+    // BirthDate, and underwriting requires legal-adult applicants.
+    const dobMs = Date.parse(dob);
+    if (isNaN(dobMs)) { showErr(1, 'Please enter a valid date of birth.'); return; }
+    const ageYears = (Date.now() - dobMs) / (365.25 * 24 * 60 * 60 * 1000);
+    if (ageYears < 18 || ageYears > 120) { showErr(1, 'Applicants must be at least 18 years old.'); return; }
   }
   if (from === 2) {
     if (!govIdFile) { showErr(2, 'Please upload your government ID.'); return; }
@@ -262,6 +271,7 @@ async function submitForm() {
     const lastName  = v('lastName');
     const ssn4      = v('ssn4');
     const email     = v('email');
+    const dob       = v('dob');
 
     // Source 'docs' is the dedicated value for docs.cashinflash.com
     // submissions — cif-apply server.py allowlists it alongside
@@ -269,6 +279,8 @@ async function submitForm() {
     // purple "📄 Docs" pill so the admin can spot docs-originated
     // applications at a glance. Same Firebase reports/ + Vergent
     // auto-search + email notification pipeline as apply.cashinflash.com.
+    // DOB lands here so Vergent's V1 PostCustomerData has BirthDate
+    // when an operator clicks "Create + Push" for a docs record.
     const formData = {
       firstName, middleName: '', lastName,
       email,
@@ -277,7 +289,7 @@ async function submitForm() {
       loanAmount: '255',
       bankMethod: bankMethod === 'plaid' ? 'Plaid (Connected)' : 'PDF Upload',
       language: 'en',
-      phone: '', dob: '', address: '', address2: '', city: '', state: 'CA', zip: '',
+      phone: '', dob, address: '', address2: '', city: '', state: 'CA', zip: '',
       sourceOfIncome: '', employer: '', payFrequency: '', payDay: '',
       lastPayDate: '', paymentMethod: '', grossPay: '',
       accountType: '', routingNumber: '', accountNumber: '', bankName: '',
