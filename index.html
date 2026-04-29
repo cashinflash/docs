@@ -359,6 +359,10 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
             <input type="text" id="ssn4" placeholder="0000" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" style="width:90px;text-align:center;letter-spacing:.2em;font-weight:700">
           </div>
         </div>
+        <div class="field">
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" id="dob" autocomplete="bday" style="width:100%;border:1.5px solid var(--border2);border-radius:10px;padding:13px 14px;font-size:15px;font-family:var(--sans);color:var(--text);transition:border-color .15s,box-shadow .15s;background:white">
+        </div>
 
         <div class="err-msg" id="err-1">Please fill in all required fields.</div>
         <button class="btn-primary" onclick="nextStep(1)">Continue →</button>
@@ -636,9 +640,18 @@ function nextStep(from) {
     const ln = document.getElementById('lastName').value.trim();
     const em = document.getElementById('email').value.trim();
     const ssn = document.getElementById('ssn4').value.trim();
+    const dob = document.getElementById('dob').value.trim();
     if (!fn || !ln) { showErr(1, 'Please fill in your name.'); return; }
     if (!em || !em.includes('@') || !em.includes('.')) { showErr(1, 'Please enter a valid email address.'); return; }
     if (ssn.length !== 4 || !/^\d{4}$/.test(ssn)) { showErr(1, 'Please enter exactly 4 digits for your SSN.'); return; }
+    if (!dob || !/^\d{4}-\d{2}-\d{2}$/.test(dob)) { showErr(1, 'Please enter your date of birth.'); return; }
+    // Sanity: must be a real date and ≥ 18 years old. Vergent's
+    // V1 PostCustomerData rejects customer-create without a valid
+    // BirthDate, and underwriting requires legal-adult applicants.
+    const dobMs = Date.parse(dob);
+    if (isNaN(dobMs)) { showErr(1, 'Please enter a valid date of birth.'); return; }
+    const ageYears = (Date.now() - dobMs) / (365.25 * 24 * 60 * 60 * 1000);
+    if (ageYears < 18 || ageYears > 120) { showErr(1, 'Applicants must be at least 18 years old.'); return; }
   }
   if (from === 2) {
     if (!govIdFile) { showErr(2, 'Please upload your government ID.'); return; }
@@ -848,6 +861,7 @@ async function submitForm() {
     const lastName  = v('lastName');
     const ssn4      = v('ssn4');
     const email     = v('email');
+    const dob       = v('dob');
 
     // Source 'docs' is the dedicated value for docs.cashinflash.com
     // submissions — cif-apply server.py allowlists it alongside
@@ -855,6 +869,8 @@ async function submitForm() {
     // purple "📄 Docs" pill so the admin can spot docs-originated
     // applications at a glance. Same Firebase reports/ + Vergent
     // auto-search + email notification pipeline as apply.cashinflash.com.
+    // DOB lands here so Vergent's V1 PostCustomerData has BirthDate
+    // when an operator clicks "Create + Push" for a docs record.
     const formData = {
       firstName, middleName: '', lastName,
       email,
@@ -863,7 +879,7 @@ async function submitForm() {
       loanAmount: '255',
       bankMethod: bankMethod === 'plaid' ? 'Plaid (Connected)' : 'PDF Upload',
       language: 'en',
-      phone: '', dob: '', address: '', address2: '', city: '', state: 'CA', zip: '',
+      phone: '', dob, address: '', address2: '', city: '', state: 'CA', zip: '',
       sourceOfIncome: '', employer: '', payFrequency: '', payDay: '',
       lastPayDate: '', paymentMethod: '', grossPay: '',
       accountType: '', routingNumber: '', accountNumber: '', bankName: '',
