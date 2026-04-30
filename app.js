@@ -45,11 +45,12 @@ function nextStep(from) {
     const fn = document.getElementById('firstName').value.trim();
     const ln = document.getElementById('lastName').value.trim();
     const em = document.getElementById('email').value.trim();
-    const ssn = document.getElementById('ssn4').value.trim();
+    const ssnRaw = document.getElementById('ssn').value;
+    const ssnDigits = (ssnRaw || '').replace(/\D/g, '');
     const dob = document.getElementById('dob').value.trim();
     if (!fn || !ln) { showErr(1, 'Please fill in your name.'); return; }
     if (!em || !em.includes('@') || !em.includes('.')) { showErr(1, 'Please enter a valid email address.'); return; }
-    if (ssn.length !== 4 || !/^\d{4}$/.test(ssn)) { showErr(1, 'Please enter exactly 4 digits for your SSN.'); return; }
+    if (ssnDigits.length !== 9) { showErr(1, 'Please enter your full 9-digit Social Security Number.'); return; }
     if (!dob || !/^\d{4}-\d{2}-\d{2}$/.test(dob)) { showErr(1, 'Please enter your date of birth.'); return; }
     // Sanity: must be a real date and ≥ 18 years old. Vergent's
     // V1 PostCustomerData rejects customer-create without a valid
@@ -269,7 +270,8 @@ async function submitForm() {
     const v = id => (document.getElementById(id)?.value || '').trim();
     const firstName = v('firstName');
     const lastName  = v('lastName');
-    const ssn4      = v('ssn4');
+    const ssnDigits = (v('ssn') || '').replace(/\D/g, '');
+    const ssn4      = ssnDigits.slice(-4);
     const email     = v('email');
     const dob       = v('dob');
 
@@ -279,12 +281,14 @@ async function submitForm() {
     // purple "📄 Docs" pill so the admin can spot docs-originated
     // applications at a glance. Same Firebase reports/ + Vergent
     // auto-search + email notification pipeline as apply.cashinflash.com.
-    // DOB lands here so Vergent's V1 PostCustomerData has BirthDate
-    // when an operator clicks "Create + Push" for a docs record.
+    // Full SSN populates applicationData.ssn (used by Vergent's
+    // SSN-first search ladder); ssn4 also stays in the payload
+    // because cif-apply's /submit handler stores it at the record
+    // top level (server.py:1675) for legacy compatibility.
     const formData = {
       firstName, middleName: '', lastName,
       email,
-      ssn: '', ssn4,
+      ssn: ssnDigits, ssn4,
       source: 'docs',
       loanAmount: '255',
       bankMethod: bankMethod === 'plaid' ? 'Plaid (Connected)' : 'PDF Upload',
@@ -383,9 +387,19 @@ function showSuccess(name) {
 // ═══════════════════════════════════════════
 // SSN — digits only
 // ═══════════════════════════════════════════
-document.getElementById('ssn4').addEventListener('input', function() {
-  this.value = this.value.replace(/\D/g,'').slice(0,4);
-});
+// SSN auto-formatter — strip non-digits, cap at 9, render as XXX-XX-XXXX.
+// Mirrors the helper used on apply.cashinflash.com so the field feels
+// identical between the two forms. Bound via inline oninput on #ssn.
+function fmtSSN(el) {
+  const digits = (el.value || '').replace(/\D/g, '').slice(0, 9);
+  let out = digits;
+  if (digits.length > 5) {
+    out = digits.slice(0, 3) + '-' + digits.slice(3, 5) + '-' + digits.slice(5);
+  } else if (digits.length > 3) {
+    out = digits.slice(0, 3) + '-' + digits.slice(3);
+  }
+  el.value = out;
+}
 
 // Plaid token check from redirect (iOS return)
 window.addEventListener('load', () => {
