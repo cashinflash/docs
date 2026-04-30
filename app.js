@@ -51,7 +51,10 @@ function nextStep(from) {
     if (!fn || !ln) { showErr(1, 'Please fill in your name.'); return; }
     if (!em || !em.includes('@') || !em.includes('.')) { showErr(1, 'Please enter a valid email address.'); return; }
     if (ssnDigits.length !== 9) { showErr(1, 'Please enter your full 9-digit Social Security Number.'); return; }
-    if (!dob || !/^\d{4}-\d{2}-\d{2}$/.test(dob)) { showErr(1, 'Please enter your date of birth.'); return; }
+    // DOB shape: MM/DD/YYYY (matches apply.cashinflash.com — text
+    // input with numeric keypad + auto-slash via fmtDOB, much
+    // better mobile UX than type=date's native picker).
+    if (!dob || !/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) { showErr(1, 'Please enter your date of birth (MM/DD/YYYY).'); return; }
     // Sanity: must be a real date and ≥ 18 years old. Vergent's
     // V1 PostCustomerData rejects customer-create without a valid
     // BirthDate, and underwriting requires legal-adult applicants.
@@ -399,6 +402,19 @@ function fmtSSN(el) {
     out = digits.slice(0, 3) + '-' + digits.slice(3);
   }
   el.value = out;
+}
+
+// DOB auto-formatter — strip non-digits, cap at 8, render as
+// MM/DD/YYYY. Inline copy of apply.cashinflash.com's fmtDOB so the
+// numeric-keypad + auto-slash UX is identical between the two forms.
+function fmtDOB(el) {
+  let v = (el.value || '').replace(/\D/g, '');
+  if (v.length > 4) {
+    v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4, 8);
+  } else if (v.length > 2) {
+    v = v.slice(0, 2) + '/' + v.slice(2);
+  }
+  el.value = v;
 }
 
 // Plaid token check from redirect (iOS return)
