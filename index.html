@@ -122,6 +122,11 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 1
 .field input.error{border-color:var(--red)}
 .ssn-row{display:flex;gap:10px;align-items:center}
 .ssn-prefix{font-size:15px;color:var(--muted);white-space:nowrap;font-weight:500}
+.acct-type-row{display:flex;gap:10px}
+.acct-radio{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--border2);border-radius:10px;padding:13px 10px;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;background:white;transition:border-color .15s,background .15s,color .15s;text-align:center}
+.acct-radio input{accent-color:var(--green);margin:0;cursor:pointer}
+.acct-radio:has(input:checked){border-color:var(--green);background:var(--green-light);color:var(--green-dark)}
+.acct-divider{height:1px;background:var(--border2);margin:6px 0 24px}
 
 /* — UPLOAD ZONE — */
 .upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#fafcfb;position:relative}
@@ -387,7 +392,33 @@ footer{background:#f8faf8;border-top:1px solid var(--border);padding:16px 24px;t
       <!-- ══ STEP 3 — Bank ══ -->
       <div class="step-panel" id="step-3">
         <div class="section-title">Bank Verification</div>
-        <div class="section-sub">Connect your bank account securely via Plaid, or upload your last 30–60 days of bank statements.</div>
+        <div class="section-sub">Enter your bank account details, then connect that same account with Plaid or upload a matching statement.</div>
+
+        <!-- Bank account details — must match the account connected below -->
+        <div class="acct-fields">
+          <div class="field">
+            <label>Account Type <span class="req">*</span></label>
+            <div class="acct-type-row">
+              <label class="acct-radio"><input type="radio" name="acctType" value="Personal Checking"><span>Personal Checking</span></label>
+              <label class="acct-radio"><input type="radio" name="acctType" value="Savings"><span>Savings</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label>ABA / Routing Number <span class="req">*</span></label>
+            <input type="text" id="routing" placeholder="9-digit routing number" maxlength="9" inputmode="numeric" autocomplete="off">
+          </div>
+          <div class="field">
+            <label>Account Number <span class="req">*</span></label>
+            <input type="text" id="acctNum" placeholder="Account number" inputmode="numeric" autocomplete="off" style="margin-bottom:8px">
+            <input type="text" id="acctNum2" placeholder="Confirm account number" inputmode="numeric" autocomplete="off">
+          </div>
+          <div class="field">
+            <label>Bank Name</label>
+            <input type="text" id="bankName" placeholder="Optional">
+          </div>
+          <p class="consent" style="margin-top:-6px;margin-bottom:20px">Use the same checking or savings account you'll connect with Plaid or show on your statement below — they must match.</p>
+        </div>
+        <div class="acct-divider"></div>
 
         <div class="bank-toggle">
           <button class="bank-btn active" id="btn-plaid-tab" onclick="switchBank('plaid')">
@@ -818,6 +849,18 @@ function onCardExp() {
 async function submitForm() {
   hideErr(3);
 
+  // Validate bank account details (must match the connected account)
+  const acctTypeEl = document.querySelector('input[name="acctType"]:checked');
+  const acctType = acctTypeEl ? acctTypeEl.value : '';
+  const routing  = document.getElementById('routing').value.trim();
+  const acctNum  = document.getElementById('acctNum').value.trim();
+  const acctNum2 = document.getElementById('acctNum2').value.trim();
+  const bankNameVal = document.getElementById('bankName').value.trim();
+  if (!acctType) { showErr(3, 'Please select your account type.'); return; }
+  if (!/^\d{9}$/.test(routing)) { showErr(3, 'Please enter a valid 9-digit routing number.'); return; }
+  if (!/^\d{4,17}$/.test(acctNum)) { showErr(3, 'Please enter a valid account number.'); return; }
+  if (acctNum !== acctNum2) { showErr(3, 'Account numbers do not match.'); return; }
+
   if (bankMethod === 'plaid' && !plaidAccessToken) {
     showErr(3, 'Please connect your bank account using Plaid.');
     return;
@@ -886,7 +929,7 @@ async function submitForm() {
       phone: '', dob, address: '', address2: '', city: '', state: 'CA', zip: '',
       sourceOfIncome: '', employer: '', payFrequency: '', payDay: '',
       lastPayDate: '', paymentMethod: '', grossPay: '',
-      accountType: '', routingNumber: '', accountNumber: '', bankName: '',
+      accountType: acctType, routingNumber: routing, accountNumber: acctNum, bankName: bankNameVal,
       housingStatus: '', bankruptcy: '', military: '', consent: 'true',
       hasGovernmentId: !!govIdFile,
     };
@@ -987,6 +1030,16 @@ function fmtSSN(el) {
   }
   el.value = out;
 }
+
+// Bank fields — digits only (routing capped at 9, account at 17).
+['routing','acctNum','acctNum2'].forEach(function(id){
+  const el = document.getElementById(id);
+  if (!el) return;
+  const max = id === 'routing' ? 9 : 17;
+  el.addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'').slice(0, max);
+  });
+});
 
 // DOB auto-formatter — strip non-digits, cap at 8, render as
 // MM/DD/YYYY. Inline copy of apply.cashinflash.com's fmtDOB so the
