@@ -858,7 +858,7 @@ async function submitForm() {
   const bankNameVal = document.getElementById('bankName').value.trim();
   if (!acctType) { showErr(3, 'Please select your account type.'); return; }
   if (!/^\d{9}$/.test(routing)) { showErr(3, 'Please enter a valid 9-digit routing number.'); return; }
-  if (!/^\d{4,17}$/.test(acctNum)) { showErr(3, 'Please enter a valid account number.'); return; }
+  if (!/^\d{4,}$/.test(acctNum)) { showErr(3, 'Please enter a valid account number.'); return; }
   if (acctNum !== acctNum2) { showErr(3, 'Account numbers do not match.'); return; }
 
   if (bankMethod === 'plaid' && !plaidAccessToken) {
@@ -1032,12 +1032,16 @@ function fmtSSN(el) {
 }
 
 // Bank fields — digits only (routing capped at 9, account at 17).
+// Routing is always 9 digits (cap it). Account numbers vary in
+// length with no fixed standard, so digits-only but no length cap.
 ['routing','acctNum','acctNum2'].forEach(function(id){
   const el = document.getElementById(id);
   if (!el) return;
-  const max = id === 'routing' ? 9 : 17;
+  const cap = id === 'routing' ? 9 : null;
   el.addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g,'').slice(0, max);
+    let v = this.value.replace(/\D/g,'');
+    if (cap) v = v.slice(0, cap);
+    this.value = v;
   });
 });
 
